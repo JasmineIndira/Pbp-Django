@@ -27,7 +27,7 @@ def show_wishlist(request):
 @login_required(login_url='/wishlist/login/')
 def view_wishlist_ajax(request):
     context = {
-        'nama': 'Jasmine Indira Wibowo',
+        'nama': request.user.username,
         'last_login': request.COOKIES['last_login'],
         }
     return render(request, "wishlist_ajax.html", context)
