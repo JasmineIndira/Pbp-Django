@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required(login_url='/wishlist/login/')
 # Create your views here.
@@ -22,6 +23,27 @@ def show_wishlist(request):
         'last_login': request.COOKIES['last_login'],
         }
     return render(request, "wishlist.html", context)
+
+@login_required(login_url='/wishlist/login/')
+def view_wishlist_ajax(request):
+    context = {
+        'nama': 'Jasmine Indira Wibowo',
+        'last_login': request.COOKIES['last_login'],
+        }
+    return render(request, "wishlist_ajax.html", context)
+
+@login_required(login_url='/wishlist/login/')
+@csrf_exempt
+def add_wishlist_ajax(req):
+    if req.method == "POST":
+        nama = req.POST.get("nama")
+        harga = req.POST.get("harga")
+        deskripsi = req.POST.get("deskripsi")
+        BarangWishlist.objects.create(nama_barang=nama, harga_barang=harga, deskripsi=deskripsi)
+        return HttpResponse()
+    else:
+        print("here")
+        return redirect("wishlist:show_wishlist")
     
 def show_xml(request):
     data = BarangWishlist.objects.all()

@@ -6,6 +6,9 @@ from wishlist.views import show_json_by_id
 from wishlist.views import register #sesuaikan dengan nama fungsi yang dibuat
 from wishlist.views import login_user #sesuaikan dengan nama fungsi yang dibuat
 from wishlist.views import logout_user #sesuaikan dengan nama fungsi yang dibuat
+from wishlist.views import view_wishlist_ajax
+from wishlist.views import add_wishlist_ajax
+
 
 app_name = 'wishlist'
 
@@ -17,4 +20,6 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+    path('ajax/', view_wishlist_ajax, name='wishlist_ajax'),
+    path('ajax/submit/', add_wishlist_ajax, name='add_wishlist'),
 ]
